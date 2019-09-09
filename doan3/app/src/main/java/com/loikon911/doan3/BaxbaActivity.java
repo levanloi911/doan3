@@ -1,5 +1,6 @@
 package com.loikon911.doan3;
 
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -11,7 +12,10 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 
@@ -25,7 +29,6 @@ public class BaxbaActivity extends AppCompatActivity {
 
     //di chuyen
     private void dichuyentrai(){
-       // if(row==row1)
         if (col>0){
           String x= (String) buttons[row][ col -1].getText();
           buttons[row][col].setText(x);
@@ -92,16 +95,12 @@ public class BaxbaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_baxba);
-
+        Button start= (Button)findViewById(R.id.start);
         load = (ImageView)findViewById(R.id.loa);
-
-
-
         Toolbar toolbar = findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);
         //random and set text button
         buttons = new Button[][]{{(Button)findViewById(R.id.bt1),(Button)findViewById(R.id.bt2),(Button)findViewById(R.id.bt3)},{(Button)findViewById(R.id.bt4),(Button)findViewById(R.id.bt5),(Button)findViewById(R.id.bt6)},{(Button)findViewById(R.id.bt7),(Button)findViewById(R.id.bt8),(Button)findViewById(R.id.bt9) }};
-        //buttons[0]= (Button)findViewById(R.id.bt1);
 
 
         buttons[0][0].setOnClickListener(new View.OnClickListener() {
@@ -180,6 +179,12 @@ public class BaxbaActivity extends AppCompatActivity {
                 buttons[2][i%3].setText(x[i]+"");
 
         col =row=2;
+        checkwin();
+//        Intent intent = new Intent(Main2Activity.this,BaxbaActivity.class);
+//        Main2Activity.this.startActivity(intent);
+
+        Toast toast = Toast.makeText(BaxbaActivity.this, "sometext", Toast.LENGTH_LONG);
+        toast.show();
 
 //back home
         ActionBar actionbar = getSupportActionBar();
@@ -232,5 +237,28 @@ public class BaxbaActivity extends AppCompatActivity {
         });
 
 
+
+
     }
+    private boolean checkwin(){
+        List<Byte> list = new ArrayList<>();
+        for (int i = 1; i<8; ++i){
+        list.add((byte) i);
 }
+        list.add(new Byte("0"));
+
+        byte k = 0;
+        for (byte i = 0; i < 4; ++i) {
+            for (byte j = 0; j < 4; ++j) {
+                if (!this.buttons[i][j].getText().equals(list.get(k).toString())) {
+                    return false;
+                }
+                ++k;
+            }
+        }
+        return true;
+    }
+
+}
+
+
