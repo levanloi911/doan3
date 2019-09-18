@@ -145,6 +145,8 @@ public class Game extends Activity {
             int text=cells.get(i);
             AbsoluteLayout.LayoutParams absParams = (AbsoluteLayout.LayoutParams)buttons[text].getLayoutParams();
             switch(i)
+                    //Này là logic code mà.. kiểm tra toạ độ x,y của một cái view
+            //Rồi set lại layout cho cái view đó
 
             {case(0):
 

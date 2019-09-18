@@ -35,6 +35,7 @@ public class BaxbaActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_baxba);
+        Button restar = (Button)findViewById(R.id.start);
         load = (ImageView)findViewById(R.id.loa);
         Toolbar toolbar = findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);
@@ -44,6 +45,13 @@ public class BaxbaActivity extends AppCompatActivity {
             actionbar.setDisplayHomeAsUpEnabled(true);
             actionbar.setHomeAsUpIndicator(R.drawable.back_home);
         }
+        random();
+        restar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                random();
+            }
+        });
 
         //xử lý loa
         load.setOnClickListener(new View.OnClickListener() {
@@ -76,12 +84,6 @@ public class BaxbaActivity extends AppCompatActivity {
         });
         buttons=findButtons();
 
-        for(int i=0;i<9;i++)
-        {
-            this.cells.add(i);
-        }
-        Collections.shuffle(this.cells); //random cells array
-
         fill_grid();
 
 
@@ -102,6 +104,14 @@ public class BaxbaActivity extends AppCompatActivity {
         feedbackText.setText(R.string.game_feedback_text);
 
     }
+    private void random() {
+        for (int i = 0; i < 9; i++) {
+            this.cells.add(i);
+        }
+        Collections.shuffle(this.cells); //random cells array
+    }
+
+
     public Button[] findButtons() {
         Button[] b = new Button[9];
 
@@ -194,12 +204,11 @@ public class BaxbaActivity extends AppCompatActivity {
             int text = cells.get(i);
             AbsoluteLayout.LayoutParams absParams = (AbsoluteLayout.LayoutParams) buttons[text].getLayoutParams();
             switch (i)
-            //Này là logic code mà.. kiểm tra toạ độ x,y của một cái view
-            //Rồi set lại layout cho cái view đó
+            //kiểm tra toạ độ x,y của một cái view
+            // set lại layout cho cái view đó
 
             {
                 case (0):
-
                     absParams.x = 5;
                     absParams.y = 5;
                     buttons[text].setLayoutParams(absParams);
@@ -258,7 +267,7 @@ public class BaxbaActivity extends AppCompatActivity {
         }
     }
 
-    public int find_pos(int element)
+        public int find_pos(int element)
     {
         int i=0;
         for(i=0;i<9;i++)
@@ -270,6 +279,7 @@ public class BaxbaActivity extends AppCompatActivity {
         }
         return i;
     }
+
 }
 
 

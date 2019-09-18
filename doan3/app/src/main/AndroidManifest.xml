@@ -9,13 +9,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppThemeNoActionBar">
-        <activity android:name=".BaxbaActivity"
+        <activity android:name=".OpenVideoActivity"
             android:theme="@style/AppThemeNoActionBar"
+            android:parentActivityName=".MainActivity"></activity>
+        <activity
+            android:name=".BaxbaActivity"
             android:label="          3x3"
-            android:parentActivityName=".Main2Activity" >
-        </activity>
-        <activity android:name=".Main2Activity"
-            android:theme="@style/AppThemeNoActionBar"/>
+            android:parentActivityName=".Main2Activity"
+            android:theme="@style/AppThemeNoActionBar"></activity>
+        <activity
+            android:name=".Main2Activity"
+            android:theme="@style/AppThemeNoActionBar" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
