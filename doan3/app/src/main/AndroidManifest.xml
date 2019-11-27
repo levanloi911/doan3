@@ -9,16 +9,32 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppThemeNoActionBar">
-        <activity android:name=".OpenVideoActivity"
-            android:theme="@style/AppThemeNoActionBar"
-            android:parentActivityName=".MainActivity"></activity>
+        <activity android:name=".Level6"></activity>
         <activity
-            android:name=".BaxbaActivity"
-            android:label="          3x3"
-            android:parentActivityName=".Main2Activity"
-            android:theme="@style/AppThemeNoActionBar"></activity>
+            android:name=".Level5Activity"
+            android:label="          Level 5"
+            android:parentActivityName=".Choose_Level_Activity" />
         <activity
-            android:name=".Main2Activity"
+            android:name=".Level4Activity"
+            android:label="          Level 4" />
+        <activity
+            android:name=".Level3Activity"
+            android:label="          Level 3" />
+        <activity
+            android:name=".Level2Activity"
+            android:label="          Level 2"
+            android:parentActivityName=".Choose_Level_Activity" />
+        <activity
+            android:name=".OpenVideoActivity"
+            android:label="          Hướng dẫn"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppThemeNoActionBar" />
+        <activity
+            android:name=".Level1Activity"
+            android:label="          Level 1"
+            android:theme="@style/AppThemeNoActionBar" />
+        <activity
+            android:name=".Choose_Level_Activity"
             android:theme="@style/AppThemeNoActionBar" />
         <activity android:name=".MainActivity">
             <intent-filter>

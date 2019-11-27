@@ -1,29 +1,31 @@
 package com.loikon911.doan3;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.media.MediaPlayer;
+import android.os.CountDownTimer;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.MotionEvent;
+import android.util.Log;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.AbsoluteLayout;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
-import java.util.Random;
 
 
-public class BaxbaActivity extends AppCompatActivity {
+public class Level1Activity extends AppCompatActivity {
     private TextView moveCounter;
+    private Dialog dialog;
+    CountDownTimer w;
     MediaPlayer mediaPlayer;
     private TextView feedbackText;
     private Button[] buttons;
@@ -31,33 +33,51 @@ public class BaxbaActivity extends AppCompatActivity {
     private static final Integer[] goal = new Integer[] {0,1,2,3,4,5,6,7,8};
     private ArrayList<Integer> cells = new ArrayList<Integer>();
     ImageView load;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_baxba);
-        Button restar = (Button)findViewById(R.id.start);
-        load = (ImageView)findViewById(R.id.loa);
-        Toolbar toolbar = findViewById(R.id.toolBar);
-        setSupportActionBar(toolbar);
-        //back home
-        ActionBar actionbar = getSupportActionBar();
-        if (actionbar != null) {
-            actionbar.setDisplayHomeAsUpEnabled(true);
-            actionbar.setHomeAsUpIndicator(R.drawable.back_home);
-        }
-        random();
-        restar.setOnClickListener(new View.OnClickListener() {
+        setContentView(R.layout.activity_level_1);
+        Button mix = (Button)findViewById(R.id.start);
+        Button back1 = (Button)findViewById(R.id.bacl);
+        back1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                random();
+                onBackPressed();
+                mediaPlayer.stop();
             }
         });
 
-        //xử lý loa
-        load.setOnClickListener(new View.OnClickListener() {
+        // Thời gian
+        final TextView tv1 = (TextView) findViewById(R.id.tv);
+        w = new CountDownTimer(600000, 1000) {
+            public void onTick(long mil) {
+                tv1.setText("Seconds remaining: " + mil / 1000);
+            }
+
+            public void onFinish() {
+                tv1.setText("Seconds remaining: 0");
+                Ketthuc();
+
+            }
+        }.start();
+
+        load = (ImageView)findViewById(R.id.loa);
+        Toolbar toolbar = findViewById(R.id.toolBar);
+        setSupportActionBar(toolbar);
+
+        //radom arr
+        random();
+        mix.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mediaPlayer= MediaPlayer.create(BaxbaActivity.this,R.raw.nhacnen);
+                Collections.shuffle(cells); //random cells array
+                fill_grid();
+            }
+        });
+
+        //loa
+                mediaPlayer= MediaPlayer.create(Level1Activity.this,R.raw.nhacnen);
                 if(mediaPlayer.isPlaying()){
                     mediaPlayer.release();
                     mediaPlayer.pause();
@@ -80,8 +100,8 @@ public class BaxbaActivity extends AppCompatActivity {
                         }
                     }
                 });
-            }
-        });
+
+
         buttons=findButtons();
 
         fill_grid();
@@ -98,10 +118,9 @@ public class BaxbaActivity extends AppCompatActivity {
                 }
             });
         }
-
-
         moveCounter.setText("0");
         feedbackText.setText(R.string.game_feedback_text);
+        feedbackText.setTextColor(Color.BLUE);
 
     }
     private void random() {
@@ -114,7 +133,6 @@ public class BaxbaActivity extends AppCompatActivity {
 
     public Button[] findButtons() {
         Button[] b = new Button[9];
-
         b[0] = (Button) findViewById(R.id.Button00);
         b[1] = (Button) findViewById(R.id.Button01);
         b[2] = (Button) findViewById(R.id.Button02);
@@ -126,8 +144,7 @@ public class BaxbaActivity extends AppCompatActivity {
         b[8] = (Button) findViewById(R.id.Button08);
         return b;
     }
-
-    public void makeMove(final Button b) {
+        public void makeMove(final Button b) {
         bad_move=true;
         int b_text,b_pos,zuk_pos;
         b_text=Integer.parseInt((String) b.getText());
@@ -176,9 +193,11 @@ public class BaxbaActivity extends AppCompatActivity {
         if(bad_move==true)
         {
             feedbackText.setText("Move Not Allowed");
+            feedbackText.setTextColor(Color.RED);
             return;
         }
         feedbackText.setText("Move OK");
+        feedbackText.setTextColor(Color.GREEN);
         cells.remove(b_pos);
         cells.add(b_pos, 0);
         cells.remove(zuk_pos);
@@ -197,6 +216,9 @@ public class BaxbaActivity extends AppCompatActivity {
             }
         }
         feedbackText.setText("we have a winner");
+        Intent  intent = new Intent(Level1Activity.this, Level2Activity.class);
+        Level1Activity.this.startActivity(intent);
+
     }
 
     public void fill_grid() {
@@ -279,8 +301,25 @@ public class BaxbaActivity extends AppCompatActivity {
         }
         return i;
     }
-
+    public void Ketthuc() {
+            AlertDialog.Builder builder = new AlertDialog.Builder(Level1Activity.this, android.R.style.Theme_DeviceDefault_Dialog);
+            builder.setTitle("Bạn đã thua cuộc");
+            builder.setMessage("Hãy lựa chọn bên dưới để xác nhân");
+            builder.setIcon(android.R.drawable.ic_notification_overlay);
+            builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    onBackPressed();
+                }
+            });
+            dialog.setCanceledOnTouchOutside(false);
+            builder.show();
+    }
 }
+
+
+
+
 
 
 

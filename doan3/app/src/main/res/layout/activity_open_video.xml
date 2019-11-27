@@ -23,8 +23,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Cách chơi:
-        Chạm tay vào các vùng chọn để di chuyển trái, phải, lên, xuống
-        Yêu cầu người chơi phải sắp xếp các con số theo thứ tự từ nhỏ đến lớn, từ trái qua phải, từ trên xuống dưới, khi người chơi hoàn thành được chuỗi số trong khoảng thời gian cho phéo thì đông nghĩa với chiến thắng.
+        Chạm tay vào các vùng chọn để di chuyển trái, phải, lên, xuống. Yêu cầu người chơi phải sắp xếp các con số theo thứ tự từ nhỏ đến lớn, từ trái qua phải, từ trên xuống dưới, khi người chơi hoàn thành được chuỗi số trong khoảng thời gian cho phéo thì đông nghĩa với chiến thắng.
+
 
         =>> Video hướng dẫn ⬇⬇⬇"
                 android:textStyle="bold"
